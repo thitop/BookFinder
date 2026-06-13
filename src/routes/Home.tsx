@@ -114,7 +114,7 @@ export default function Home() {
             <select
               className="select select-bordered select-sm"
               value={sortBy}
-              onChange={(e) => setSortBy(e.target.value as any)}
+              onChange={(e) => setSortBy(e.target.value as "default" | "a-z" | "z-a" | "year")}
             >
               <option value="default">เรียงตามความเกี่ยวข้อง</option>
               <option value="a-z">เรียง A-Z</option>

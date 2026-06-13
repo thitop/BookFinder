@@ -61,6 +61,7 @@ export default function Navbar() {
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
+    window.location.reload();
   };
 
   const handleHomeClick = () => {

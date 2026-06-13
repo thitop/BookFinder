@@ -22,6 +22,35 @@ const initialState: BooksState = {
   q: 'programming', // ตั้งค่าเริ่มต้นให้แสดงหนังสือทันที
 };
 
+interface GoogleBooksItem {
+  id: string;
+  volumeInfo: {
+    title?: string;
+    authors?: string[];
+    publishedDate?: string;
+    averageRating?: number;
+    imageLinks?: {
+      extraLarge?: string;
+      large?: string;
+      medium?: string;
+      thumbnail?: string;
+      smallThumbnail?: string;
+    };
+  };
+}
+
+interface OpenLibraryDoc {
+  title?: string;
+  author_name?: string[];
+  first_publish_year?: number;
+  publish_year?: number[];
+  isbn?: string[];
+  edition_key?: string[];
+  lending_edition_s?: string;
+  ia?: string[];
+  cover_i?: number;
+}
+
 /**
  * ดึงข้อมูลหนังสือจาก Google Books API
  */
@@ -43,7 +72,7 @@ export const fetchBooks = createAsyncThunk<
     
     const data = await res.json();
     
-    const items: Book[] = (data.items || []).map((item: any) => {
+    const items: Book[] = (data.items || []).map((item: GoogleBooksItem) => {
       const volumeInfo = item.volumeInfo;
       
       // ใช้รูปขนาดใหญ่สุดที่มี
@@ -92,7 +121,7 @@ export const fetchBooks = createAsyncThunk<
     
     const data = await res.json();
     
-    const items: Book[] = (data.docs || []).map((doc: any) => {
+    const items: Book[] = (data.docs || []).map((doc: OpenLibraryDoc) => {
       const isbn = doc.isbn?.[0];
       const olid = doc.edition_key?.[0] || doc.lending_edition_s;
       const ia = doc.ia?.[0];

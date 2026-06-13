@@ -39,8 +39,12 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
         return;
       }
       onClose();
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError(String(err));
+      }
     } finally {
       setLoading(false);
     }

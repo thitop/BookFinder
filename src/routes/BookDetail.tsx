@@ -55,7 +55,7 @@ async function fetchGoogleBooks(query: string): Promise<BookDetail | null> {
     let isbn13: string | undefined;
 
     if (volumeInfo.industryIdentifiers) {
-      volumeInfo.industryIdentifiers.forEach((id: any) => {
+      volumeInfo.industryIdentifiers.forEach((id: { type: string; identifier: string }) => {
         if (id.type === 'ISBN_10') isbn10 = id.identifier;
         if (id.type === 'ISBN_13') isbn13 = id.identifier;
       });
